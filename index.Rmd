@@ -1,7 +1,7 @@
 ---
-title: "Responsiveness in immigration enforcement"
-author: "Angelo Dagonel (TF)"
-description: "County-level ICE compliance under constituent preferences and electoral dynamics"
+title: "Goov-50 Final Project Idea"
+author: "Syd Sanders"
+description: "Homelessness Policy Analytics"
 output:
   distill::distill_article:
     self_contained: false
@@ -11,17 +11,7 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to immigration enforcement and immigration preferences. A working project with Asya Magazinnik (Massachusetts Institute of Technology) explores how county-level compliance of Sheriff's offices with ICE detainer requests relates to ideal point estimates of immigration preferences. Specifically: our project asks whether the public's immigration preferences, restrictive or accommodating, influences how local law enforcement agencies comply with bureaucratic delegation from ICE.
-
-To investigate this relationship, we are relying on data from three different sources:
-
-1. [Transactional Records Access Clearinghouse (TRAC)](https://trac.syr.edu/immigration/) data on detainer requests sent to county Sheriff's offices from the Department of Homeland Security's sub-agency Immigration Customs and Enforcement (ICE);
-
-2. [Coooperative Election Study (CES)](https://cces.gov.harvard.edu/) data on immigration policy preferences; and
-
-3. novel data of county-level Sheriff elections and electoral type--partisan or non-partisan elections, non-electoral appointment.
-
-TRAC data provides us with our outcome variable, the proportion of ICE detainer requests that are complied with; CES data provides us with our explanatory variable, public immigration policy preferences; and the Sheriff electoral data provides us with a grouping variable.
+I have not decided what I want to do my final project on yet, so these thoughts are subject to change. However, I might be interested in analyzing the efficacy of Cambridge housing policy for the homeless. I am a volunteer Supervisor at the Harvard Square Homeless Shelter, and we use a data platform called the Homelessness Information Management System (HMIS). There is a ton of data in here about the experiences with homelessness of all the houseless in Cambridge who access services, as well as housing placement efficacy data. I want to analyze how effective different policies are at helping alleviate homelessness, both temporarily and in the long term. I would also probably use the national government's yearly homelessness reports, which are informed in Massachusetts by the HMIS system. 
 
 
 
