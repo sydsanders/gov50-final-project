@@ -17,3 +17,29 @@ I have not decided what I want to do my final project on yet, so these thoughts 
 
 My project topic is evaluating the efficacy of different homelessness housing policies in the city of Cambridge. My research question is: which policy approach to homelessness leads to the highest levels of entry into permanent housing for the homeless in Cambridge, Massachusetts? My data set will come from the Homeless Management Information System data for Cambridge. HMIS is a US Dept of Housing and Urban Development program tracking data about the homeless in localities across the US. [Here](https://www.hudexchange.info/programs/hmis/) is the website. To obtain this data, I am emailing Marianne Colangelo, the HMIS Project Manager for the City of Cambridge. I will most likely have access to this data because I am a trained Supervisor at the Harvard Square Homeless Shelter and have an account on HMIS. I will do a comparison study of two different housing policy solutions to homelessness, probably the City of Cambridge's Emergency Housing Voucher Program ("EHV", via Section 8) and HomeStart, a more community-based housing plan. These will be my independent/explanatory variables - participation in a homelessness policy - and the dependent variable will be rates of acquisition of long-term housing for the homeless. I will have a control also of the homeless who accessed no such programs and their rates of obtaining long term housing. My hypothesis is that if homeless residents of Cambridge access HomeStart, they will have greater rates of being in long-term housing after the program than homeless residents who use Section 8 EHV plans. I hypothesize this because there is some evidence that community-based solutions work better than non-community solutions like Section 8. I will measure my outcome variable of obtaining long-term housing because that is a variable within the HMIS data I plan to obtain. It is measured as people who make it into housing units through policies aimed at alleviating homelessness and remain there for longer than 3 months. My hypothesis will be supported if there is evidence that those who participate in HomeStart have higher rates of making it into long-term housing than those who use EHV. My hypothesis will be disproved if there is no such relationship. 
 
+## Data Visualization
+
+```{r}
+library(tidyverse)
+library(infer)
+library(broom)
+street_exits <- read_csv("SuccessfulSO Box+Whisker.csv")
+street_exits
+```
+
+
+```{r}
+street_exits_longer <- street_exits |>
+  pivot_longer(cols = `2015`:`2021`,
+               names_to = "Year",
+               values_to = "street_exit")
+street_exits_longer
+
+street_exits_longer |>
+  filter(Year == 2021) |>
+  ggplot(aes(x=street_exit)) +
+  geom_histogram(fill="limegreen") +
+  labs(x="Percentage of Street Exits", y="Count", title = "Distribution of Street Exit Percentages across HUD CoCs")
+
+```
+This graph visualizes the distribution of percentages of street exits across all Continuums of Care in the HUD system. We can see from it that the most common percentages of people who make it off the streets and into permanent or temporary housing are mostly between 30% and 75%, with a big spike at 100%. 
