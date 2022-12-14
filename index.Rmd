@@ -1,7 +1,7 @@
 ---
-title: "Gov-50 Final Project"
+title: "HUD Budget and Housing CPI's Influence on City Levels of Homelessness"
 author: "Syd Sanders"
-description: "HUD Budget and Housing CPI's Influence on City Levels of Homelessness"
+description: "Observational data analysis of the explanatory power of rises in the Consumer Price Index cost of housing and the Department of Housing and Urban Development's annual budget on the percentages of NYC and Cambridge populations in the Homeless Management Information System"
 output:
   distill::distill_article:
     self_contained: false
