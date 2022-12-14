@@ -35,7 +35,6 @@ Below is a plot of my dependent variable, the percentage of each city experienci
 ```{r}
 total_data <- read_csv("Total Data.csv") |>
   mutate(City = if_else(coc_number == 1, "Cambridge", "NYC"))
-total_data
 
 total_data |>
   ggplot(aes(x=year, y=percent_hmis, color = City)) +
@@ -53,8 +52,7 @@ This graph displays the fluctuation in percentages of each city experiencing hom
 
 ```{r}
 hmis_hud_reg <- lm(percent_hmis ~ hud_budget, data = total_data)
-hmis_hud_reg
-glance(hmis_hud_reg)
+modelsummary::modelsummary(list(hmis_hud_reg), title = "HUD Budget and HMIS Percentage Regression")
 
 total_data |>
   ggplot(aes(x=hud_budget, y=percent_hmis)) +
@@ -68,8 +66,7 @@ The HUD budget coefficient is -0.0085, meaning that for every billion dollar inc
 
 ```{r}
 hmis_cpi_reg <- lm(percent_hmis ~ cpi_housing, data = total_data)
-hmis_cpi_reg
-glance(hmis_cpi_reg)
+modelsummary::modelsummary(list(hmis_cpi_reg), title = "CPI Housing and HMIS Percentage Regression")
 
 total_data |>
   ggplot(aes(x=cpi_housing, y=percent_hmis)) +
@@ -83,9 +80,7 @@ The CPI housing coefficient is about -0.01, meaning that for every unit increase
 
 ```{r}
 multiple_regression <- lm(percent_hmis ~ hud_budget + cpi_housing, data = total_data)
-multiple_regression
-glance(multiple_regression)
-modelsummary::modelsummary(list(multiple_regression))
+modelsummary::modelsummary(list(multiple_regression), title = "Multiple Regression")
 ```
 The results of this multiple regression have new coefficients for HUD budget and CPI housing values. The coefficient for HUD budget is about -0.016, meaning that for each billion dollar increase in HUD budgetary resources, the level of people enrolled in HMIS goes down by -0.016 percent while holding the effects of the consumer price index of housing constant. The coefficient for CPI housing is 0.025, meaning that for each unit increase in the cost of housing, the percentage of people experiencing homelessness in a city goes up by 0.025 percent holding the effects of the HUD budget constant. This is actually very interesting, because by doing a multiple regression and holding the effects of the HUD budget constant, the relationship between CPI of housing and homelessness reversed. In the single regression above, the relationship was that increases in CPI tracked with decreases in homelessness. This regression shows that when taking into account and holding constant HUD budgets, the relationship is actually that CPI increases correlate with increases in homelessness. The R-squared value, or explanatory power of this multiple regression, is much higher than it was for either individually, falling in at about 0.82, meaning that 82% of variance in percentages of people experiencing homelessness correlates with HUD budget and CPI housing shifts 
 
