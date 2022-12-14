@@ -1,0 +1,11 @@
+year,st,stateno,state,state_fips,state_icpsr,poptotal,statemin,pctfemaleleg,nofelons,noofvotes,vep,vepvotingrate,cartheftrate,carthefttotal,murderrate,murdertotal,propcrimerate,propcrimetotal,raperate,rapetotal,robrate,vcrimerate,vcrimetotal,gunbckcheck,divorcerate,educspend,edtotalexpend,enrollstudents,edinstruct_pct_expend,edinstruct_expend_pstud,edattendrate,eddayattendrate,eddropoutrate,hsdiploma,pupilteachratio,mathscore4th,readscore4th,popgovhealthins,popnohealthins,popprivhealthins,healthspendpc,infantmortality,abortionrate,res_energy_price,co2emissions,licdrivers
+2015,MA,21,Massachusetts,25,3,6794422,9,25,NA,NA,NA,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,"167,285",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,4.3,NA,25.38,65.6,NA
+2015,NY,32,New York,36,13,19795791,8.75,25.8,NA,NA,NA,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,"346,048",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,4.6,NA,21.82,167.7,NA
+2016,MA,21,Massachusetts,25,3,6811779,10,25,8780,3325046,4948028,0.67,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,226212,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,3.9,NA,24.84,64.2,NA
+2016,NY,32,New York,36,13,19745289,9,25.8,90842,7721453,13604645,0.57,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,404772,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,4.5,NA,21.35,163.7,NA
+2017,MA,21,Massachusetts,25,3,6859819,11,26,NA,NA,NA,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,96590,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,3.7,NA,25.8,NA,NA
+2017,NY,32,New York,36,13,19849399,9.7,28,NA,NA,NA,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,159779,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,4.6,NA,22.25,NA,NA
+2018,MA,21,Massachusetts,25,3,NA,NA,25,8780,2707090,5042403,0.54,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+2018,NY,32,New York,36,13,NA,NA,28,90842,6104477,13772077,0.44,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+2019,MA,21,Massachusetts,25,3,NA,NA,29,NA,NA,NA,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+2019,NY,32,New York,36,13,NA,NA,32,NA,NA,NA,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA

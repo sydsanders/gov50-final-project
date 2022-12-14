@@ -1,64 +1,99 @@
 ---
-title: "Gov-50 Final Project Idea"
+title: "Gov-50 Final Project"
 author: "Syd Sanders"
-description: "Homelessness Policy Analytics"
+description: "HUD Budget and Housing CPI's Influence on City Levels of Homelessness"
 output:
   distill::distill_article:
     self_contained: false
 ---
 
+## Research Question and Background
 
+Homelessness is a big problem across the United States, especially following the pandemic. Visible signs of its occurrence like encampments and city sweeps have increasingly been the topic of news stories, and the crisis of people living without homes has become a popular legislative policy topic. Homelessness is a critical policy area, and understanding the factors that influence it is critical for solving it. Many factors are thought to influence levels of homelessness, from the rising costs of [housing](https://www.nytimes.com/2022/07/15/briefing/homelessness-america-housing-crisis.html) to the Congressionally-allocated budget resources available to the federal [Department of Housing and Urban Development (HUD)](https://nlihc.org/resource/house-passes-fy23-minibus-17-increase-hud-programs). In this project, I seek to answer a research question of how changes in HUD's budget and the cost of housing affect city-level changes in homelessness. To measure this, I will code regressions charting as independent variables the changes in annual [HUD budgetary resources](https://www.usaspending.gov/agency/department-of-housing-and-urban-development?fy=2022) and the [Consumer Price Index (CPI) of housing](https://www.bls.gov/cpi/data.htm) against the dependent variable, the number of people in HUD's [Homeless Management Information System (HMIS)](https://www.hudexchange.info/programs/hmis/), a nationwide coordinated care tool for tracking and supporting the homeless. I will focus on two cities, Cambridge, Massachusetts and New York, New York, looking at HMIS counts for their Continuums of Care (MA-509 and NY-600) and CPI levels for their Metropolitan Statistical Areas. I hypothesize that increases in the cost of housing will correlate with increases in the numbers of people experiencing homelessness and that increases in HUD's budget will correlate with decreases in the numbers of people experiencing homelessness. If HUD's budget works, than more money to support its programs which combat homelessness should track to lower levels of homelessness. Similarly, if rising rents and housing costs are related to increasing levels of homelessness, than I should see a correlation between increases in the CPI of housing and levels of homelessness. The results of this analysis have important policy implications, for if these variables have explanatory power over homelessness they can be good targets for policy actions to mitigate the crisis. 
 
-## Milestone 1: Project thoughts
+## Data
 
-I have not decided what I want to do my final project on yet, so these thoughts are subject to change. However, I might be interested in analyzing the efficacy of Cambridge housing policy for the homeless. I am a volunteer Supervisor at the Harvard Square Homeless Shelter, and we use a data platform called the Homeless Management Information System (HMIS). There is a ton of data in here about the experiences with homelessness of all the houseless in Cambridge who access services, as well as housing placement efficacy data. I want to analyze how effective different policies are at helping alleviate homelessness, both temporarily and in the long term. I would also probably use the national government's yearly homelessness reports, which are informed in Massachusetts by the HMIS system. 
+I combined information from three different datasets for this project. My first independent variable, [HUD's annual budget](https://www.usaspending.gov/agency/department-of-housing-and-urban-development?fy=2022), comes from an open data source on federal government spending published by the United States government. Its data comes from annual enacted Congressional budgets. My second independent variable, the [Consumer Price Index](https://www.bls.gov/cpi/data.htm) of housing in the New York City and Cambridge statistical metropolitan areas, comes from the US Bureau of Labor Statistics, the government agency tracking inflation, unemployment, and other relevant labor statistics. Its data comes from economic calculations and tracking of price fluctuations and other statistics. The CPI specifically measures "the average change over time in the prices paid by urban consumers" and represents functionally increases in the cost of living in a place. My dependent variable, the counts of people in HMIS in Cambridge and NYC, comes from the ["HUDCoCSystemPerformanceMeasures"](https://public.tableau.com/app/profile/system.performance.measures.hud.public.data/viz/HUDCoCSystemPerformanceMeasures/M1LengthofStay) dataset published on Tableau, a free data sharing and visualization platform, by HUD. This data comes from Continuums of Care across the country, which are the homelessness management and coordination zones that report data about various aspects of homelessness within their CoC to HUD each year. 
 
-## Milestone 2: Project Proposal
-
-This project will use Homeless Management Information System (HMIS) data produced by the Department of Housing and Urban Development (HUD) for Continuums of Care (CoCs) across the country. It will explore a research question of how do different cities’ approaches to homelessness translate into program exits into temporary or permanent housing? It will compare Cambridge’s CoC (MA-509) with New York City’s (NY-600) in an attempt to answer this question. The data can be roughly broken down to examine exits for each CoC by different sorts of programming approaches to homelessness, with exits data grouped by 1) Street Outreach, 2) Emergency Shelter, Safe Haven, Transitional Housing, and Rapid Rehousing, and 3) Permanent Supportive Housing. Comparing this data for Cambridge to NYC can statistically inform us of which city has more successful exits rates, and outside research can add to the analysis by informing us of the differences between the cities’ policies, which we can incorporate to determine what successful approaches look like to homelessness. 
-
-## Milestone 3: Data Visualization
+Here is a table summarizing the data I used in this project. 
 
 ```{r}
 library(tidyverse)
-library(infer)
 library(broom)
-street_exits <- read_csv("SuccessfulSO Box+Whisker.csv")
-street_exits
+library(infer)
+library(ggplot2)
+library(dplyr)
+library(gapminder)
+total_data <- read_csv("Total Data.csv")
+knitr::kable(total_data,
+             col.names = c("Year", "CoC", "Percent in HMIS", "HUD Budget", "CPI Housing"))
 ```
+This data is fairly straightforward, but "CoC" represents the Continuum of Care being examined. The CoC indicated by number "1" is Cambridge (CoC = MA-509) and by number "0" is New York City (CoC = NY-600). "Percent in HMIS" refers to the percentage of the city's population in HMIS, or experiencing homelessness, which I calculated by dividing the count of people in HMIS for each city by the population of the city that year. "HUD Budget" represents the annual budgetary resources available to HUD in billions of dollars, and I have inflation-adjusted them to the year 2021. "CPI Housing" represents the increases in cost of housing over time for average urban consumers in the Boston-Cambridge-Newton metropolitan statistical area for Cambridge and the New York-Newark-Jersey City metropolitan statistical area for New York City. 
 
+Below is a plot of my dependent variable, the percentage of each city experiencing homelessness, by year. 
 
 ```{r}
-street_exits_longer <- street_exits |>
-  pivot_longer(cols = `2015`:`2021`,
-               names_to = "Year",
-               values_to = "street_exit")
-street_exits_longer
+total_data <- read_csv("Total Data.csv") |>
+  mutate(City = if_else(coc_number == 1, "Cambridge", "NYC"))
+total_data
 
-street_exits_longer |>
-  filter(Year == 2021) |>
-  ggplot(aes(x=street_exit)) +
-  geom_histogram(fill="limegreen") +
-  labs(x="Percentage of Street Exits", y="Count", title = "Distribution of Street Exit Percentages across HUD CoCs")
+total_data |>
+  ggplot(aes(x=year, y=percent_hmis, color = City)) +
+  scale_color_manual(values=c("dodgerblue4","firebrick")) +
+  geom_point(size=3) +
+  geom_smooth(aes(color = City)) +
+  labs(title = "Percentage of Population in HMIS by Year", x="Year", y="Percentage of Population in HMIS")
 
 ```
-This graph visualizes the distribution of percentages of street exits across all Continuums of Care in the HUD system. We can see from it that the most common percentages of people who make it off the streets and into permanent or temporary housing are mostly between 30% and 75%, with a big spike at 100%.
+This graph displays the fluctuation in percentages of each city experiencing homelessness that I hope to understand further by examining correlations with changes in HUD budgets and the CPI housing statistics. 
 
-## Milestone 4: Add results from one analysis
+## CPI and HUD Budget Regressions & Multiple Regression
+
+### Regression: HUD Budget and Population Percentage Experiencing Homelessness
 
 ```{r}
-nycsoexits <- read_csv("NYC SO Exits.csv")
-nycsoexits |>
-  ggplot(aes(x=year, y=so_exits)) +
-  geom_col() +
-  labs(x="Year", y = "Percentage Successful Street Outreach Exits", title = "Percentage of Successful Street Outreach Exits by Year")
-```
-```{r}
-cambridgesoexits <- read_csv("Cambridge SO Exits.csv")
-cambridgesoexits |>
-  ggplot(aes(x=year, y=so_exits)) +
-  geom_col() +
-  labs(x="Year", y = "Percentage Successful Street Outreach Exits", title = "Percentage of Successful Street Outreach Exits by Year")
-```
+hmis_hud_reg <- lm(percent_hmis ~ hud_budget, data = total_data)
+hmis_hud_reg
+glance(hmis_hud_reg)
 
-This data comparing the successful exits to permanent or temporary outreach as a result of street outreach programs to the homeless shows us an interesting pattern. From the years 2017-2019, Cambridge had higher rates of exits than NYC. However, in 2020 and 2021, NYC surpassed Cambridge and has better rates, with Cambridge's rates falling pretty significantly. This opens the question of what happened in those years that led to these different numbers, and provides interesting numbers that further research into the differing policies for street outreach in each of the cities can attempt to answer. Perhaps there was a policy change in one of the cities that led to these numbers, or significantly changing conditions. How the pandemic affected operations is certainly another thing to consider.
+total_data |>
+  ggplot(aes(x=hud_budget, y=percent_hmis)) +
+  geom_point(size=3) +
+  geom_smooth(method = "lm", se = FALSE, color = "darkorchid4") +
+  labs(title="Percent Pop. in HMIS by HUD Budget Increases", x="2021 Inflation-Adjusted HUD Budget (in billions of dollars)", y = "Percentage of Population in HMIS")
+```
+The HUD budget coefficient is -0.0085, meaning that for every billion dollar increase in HUD budget funding, the percentage of people in HMIS goes down by -0.0085 percent. The R-squared value for this regression is 0.58, which is a correlation of medium strength. It essentially can be [interpreted](https://statisticsbyjim.com/regression/interpret-r-squared-regression/) to mean that 58% of the variation in HMIS percentages can be attributed to HUD budget shifts, which is not a very high amount but is still significant. The graph visualizes this regression. 
+
+### Regression: CPI of Housing and Population Percentage Experiencing Homelessness
+
+```{r}
+hmis_cpi_reg <- lm(percent_hmis ~ cpi_housing, data = total_data)
+hmis_cpi_reg
+glance(hmis_cpi_reg)
+
+total_data |>
+  ggplot(aes(x=cpi_housing, y=percent_hmis)) +
+  geom_point(size=3) +
+  geom_smooth(method = "lm", se = FALSE, color = "darkorchid4") +
+  labs(title="Percent Pop. in HMIS by CPI Housing Increases", x="Consumer Price Index of Housing", y = "Percentage of Population in HMIS")
+```
+The CPI housing coefficient is about -0.01, meaning that for every unit increase in Consumer Price Index of Housing (reflecting inflationary increases in housing costs) the percentage of the population experiencing homelessness decreases by -0.01 percent. This is not a very strong correlation, however, with an R-squared value of only 0.1. This essentially means that only 10% of variation in homelessness percentages has to do with the price of housing. This graph visualizes this regression relationship. 
+
+### Multiple Regression
+
+```{r}
+multiple_regression <- lm(percent_hmis ~ hud_budget + cpi_housing, data = total_data)
+multiple_regression
+glance(multiple_regression)
+modelsummary::modelsummary(list(multiple_regression))
+```
+The results of this multiple regression have new coefficients for HUD budget and CPI housing values. The coefficient for HUD budget is about -0.016, meaning that for each billion dollar increase in HUD budgetary resources, the level of people enrolled in HMIS goes down by -0.016 percent while holding the effects of the consumer price index of housing constant. The coefficient for CPI housing is 0.025, meaning that for each unit increase in the cost of housing, the percentage of people experiencing homelessness in a city goes up by 0.025 percent holding the effects of the HUD budget constant. This is actually very interesting, because by doing a multiple regression and holding the effects of the HUD budget constant, the relationship between CPI of housing and homelessness reversed. In the single regression above, the relationship was that increases in CPI tracked with decreases in homelessness. This regression shows that when taking into account and holding constant HUD budgets, the relationship is actually that CPI increases correlate with increases in homelessness. The R-squared value, or explanatory power of this multiple regression, is much higher than it was for either individually, falling in at about 0.82, meaning that 82% of variance in percentages of people experiencing homelessness correlates with HUD budget and CPI housing shifts 
+
+## Conclusion
+
+My results show a medium-strength correlation for HUD budget increases and decreases in the percentages of city populations experiencing homelessness (-0.0085 coefficient, 0.58 R-squared). They show a weak correlation between the increase in the cost of housing and a decrease in the proportion of people experiencing homelessness in cities (-0.01 coefficient, 0.1 R-squared). However, this relationship is reversed in the more controlled multiple regression analysis, which shows a correlation with fairly strong explanatory power between increases in HUD budget and lower percentages of a city's population experiencing homelessness and increased costs of housing and increased homelessness. The multiple regression supports my hypothesis that increased HUD budgets and lower costs of housing are linked to lower levels of homelessness in cities. As the coefficients state, for each unit increase in CPI housing, homelessness increases by 0.025%, and fo each billion dollar increase in HUD funding, homelessness decreases by -0.016% It has fairly strong statistical significance due to a strong R-squared value of 0.82, and I interpret this cautiously as being causal to some degree. These findings are limited for many reasons, however. To begin with, they analyze data from only two cities, Cambridge and NYC, to make claims about national HUD spending on cities around the country. The data sample size should be expanded for more externally applicable results. To do this, it would be useful for an agency like HUD to compile its homelessness data with potentially causal factors like budget information or CPI results, as no such dataset exists and I had to cobble together my own from multiple sources. Another issue is that not all homeless people are in HMIS -- only those accessing shelter resources or other programming make it into the program. This regression analysis does not accomodate the many homeless people outside the system, making it not fully reflective of all homeless people, just the ones who access resources. Also, this analysis lacks a control or well-validated research design. A control for this project would look like evaluating changes in the non-homeless population in response to CPI and HUD budget. This value is sort of represented in this analysis by nature of the way I am calculating homelessness - as a percentage of the population at large of a city in HMIS - and so the people not experiencing homelessness are sort of represented in that calculation. It does not really function as a control, however. A better controlled study could look like tracking the numbers of people who exitec homelessness and/or became homeless as a function of HUD budget and CPI of housing levels, and then control could be assigned to those who were not homeless to start or who did not become homeless. Better data is necessary for these calculations. Additionally, there are many factors leading to homelessness. While my results indicate that HUD budgets and costs of housing are two such causes, they are by no means the whole story. Without extremely extensive research, it is hard to know what the most causal factors influencing homelessness are, and this report does not claim to have the answer. It does suggest that CPI and HUD budgets are influential, though, and are good targets for policy actions aiming to mitigate the homelessness crisis. This analysis has many flaws, both in terms of data access, research design, and causal determination; however, its conclusion that together, and controlling for each, the rising cost of housing and increased HUD budgets both correlate strongly with percentags of city's experiencing homelessness when viewed via a multiple regression, an important conclusion for policymakers looking to curb the crisis.
+
+
+
+
+
